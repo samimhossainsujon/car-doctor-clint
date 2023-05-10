@@ -14,11 +14,11 @@ import Home from './Pages/Home/Home/Home';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/",
-        element:<Home/>,
+        element: <Home />,
       }
     ],
   },
@@ -26,9 +26,11 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>
+  <div className='max-w-7xl mx-auto'>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </div>
 );
 
 reportWebVitals();
