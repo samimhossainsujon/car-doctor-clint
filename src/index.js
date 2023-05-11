@@ -9,6 +9,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './Pages/Home/Home/Home';
+import Login from './Pages/Login/Login';
+import SignUp from './Pages/SignUp/SignUp';
+import AuthProvider from './Proveiders/AuthProvider';
 
 
 const router = createBrowserRouter([
@@ -19,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />
       }
     ],
   },
@@ -28,7 +39,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div className='max-w-7xl mx-auto'>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </React.StrictMode>
   </div>
 );
