@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import app from '../Firebase/firebase.config';
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -10,49 +10,62 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
 
-    const [user, setUser] = useState(null);
-    const [loding, setloding] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loding, setloding] = useState(true);
 
-    //==============================
-    //create password provider
-    //=============================
-    const createUser = (email, password) => {
-        setloding(true);
-        return createUserWithEmailAndPassword(auth, email, password);
-    };
-    const signIn = (email, password) => {
-        setloding(true);
-        return signInWithEmailAndPassword(auth, email, password);
-    };
-
-
+  //==============================
+  //create password provider
+  //=============================
+  const createUser = (email, password) => {
+    setloding(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+  const signIn = (email, password) => {
+    setloding(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
 
+  //==========================
+  //   SIGN OUT
+  //==========================
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-            setloding(false);
-            // console.log('current user', currentUser);
-        });
-        return () => unsubscribe();
-
-    }, []);
+  const LogOut = () => {
+    setloding(true);
+    return signOut(auth);
+  };
 
 
-    const authInfo = {
-        user,
-        loding,
-        createUser,
-        signIn,
 
-    }
 
-    return (
-        <AuthContext.Provider value={authInfo}>
-            {children}
-        </AuthContext.Provider>
-    );
+
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setloding(false);
+      // console.log('current user', currentUser);
+    });
+    return () => unsubscribe();
+
+  }, []);
+
+
+  const authInfo = {
+    user,
+    loding,
+    createUser,
+    signIn,
+    LogOut,
+
+  }
+
+  return (
+    <AuthContext.Provider value={authInfo}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
