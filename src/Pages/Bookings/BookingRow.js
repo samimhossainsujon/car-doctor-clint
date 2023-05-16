@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 const BookingRow = ({ booking, handelDelete, handleBookingConfirm }) => {
     const { _id, date, service, price, img, status } = booking;
 
+    
+
 
     return (
         <tr>

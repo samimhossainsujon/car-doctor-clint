@@ -27,7 +27,7 @@ const BookServices = () => {
             img,
         }
         console.log(order);
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://car-doctor-server-samimhossainsujon.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
